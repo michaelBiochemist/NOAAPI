@@ -1,34 +1,41 @@
 #!/usr/bin/env python
 
-import requests
-import json
 import argparse
+import json
 import sys
+
+import requests
+
 baseurl = "https://api.weather.gov"
 
+
 def parse_args(args):
-    parser = argparse.ArgumentParser(prog='noaapi',
-        description='API Wrapper to get Weather Data',
-        )
-    parser.add_argument('subject', choices=['alerts','stations','zones'])
-    parser.add_argument('-t','--target',type=str,required=True)
-    
+    parser = argparse.ArgumentParser(
+        prog="noaapi",
+        description="API Wrapper to get Weather Data",
+    )
+    parser.add_argument("subject", choices=["alerts", "stations", "zones"])
+    parser.add_argument("-t", "--target", type=str, required=True)
+
     return parser.parse_args(args)
 
-def endpoint_to_json(endpoint,fileloc):
+
+def endpoint_to_json(endpoint, fileloc):
     response = requests.get(f"{baseurl}/{endpoint}")
     if not response.ok:
         print(f"Problem with endpoint: {endpoint}")
     else:
-        with open(f"{fileloc}/{endpoint.replace('/','.')}.json",'w') as W:
-            W.write(json.dumps(response.json(),indent='    '))
+        with open(f"{fileloc}/{endpoint.replace('/', '.')}.json", "w") as W:
+            W.write(json.dumps(response.json(), indent="    "))
+
 
 def main(args):
     args = parse_args(args)
     endpoint_to_json(args.subject, args.target)
-    
+
+
 """
-def paginated_endpoint(endpoint,pagenum=0,pageurl=None): 
+def paginated_endpoint(endpoint,pagenum=0,pageurl=None):
     if pageurl:
         response = requests.get(pageurl)
     else:
@@ -40,7 +47,7 @@ def paginated_endpoint(endpoint,pagenum=0,pageurl=None):
     resp = response.json()
     with open(f"{endpoint.replace('/','.')}_{pagenum}.json",'w') as W:
 """
-    
+
 
 """
 alerts = requests.get(f"{baseurl}/alerts/active/count"}
@@ -54,10 +61,13 @@ zones = zones.json()['features']
 glossary = requests.get(f"{baseurl}/glossary"} # Gets paginated list of stations
 zone_id = zones[1]['properties']['id']
 """
+
+
 def run():
     main(sys.argv[1:])
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     run()
 
 # Get observations by station or by zone
