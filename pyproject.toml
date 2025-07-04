@@ -32,7 +32,7 @@ target-version = ['py312']
 
 [tool.isort]
 append_only = true
-line-length = 160
+line_length = 160
 combine_as_imports = true
 skip = ["build", ".tox", "venv"]
 skip_glob = ["*.pya"]
