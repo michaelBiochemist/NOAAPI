@@ -47,4 +47,4 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: |
           pip install twine
-          twine upload dist/*
+          twine upload dist/* --verbose
