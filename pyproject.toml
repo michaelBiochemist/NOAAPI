@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "noaapi"
-version = '0.0.4'
+version = '0.0.5'
 dependencies = [
     "requests",
 ]
@@ -14,8 +14,8 @@ authors = [
 requires-python = ">=3.12"
 
 [project.scripts]
-run = "noaapi:main.run"
-noaapi = "noaapi:main.run"
+run = "noaapi.main:run"
+noaapi = "noaapi.main:run"
 
 [project.optional-dependencies]
     dev = ["black",
