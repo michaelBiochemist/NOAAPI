@@ -6,7 +6,7 @@ import sys
 
 import requests
 
-baseurl = "https://api.weather.gov"
+noaa_url = "https://api.weather.gov"
 
 
 def parse_args(args):
@@ -16,11 +16,12 @@ def parse_args(args):
     )
     parser.add_argument("subject", choices=["alerts", "stations", "zones"])
     parser.add_argument("-t", "--target", type=str, required=True)
+    parser.add_argument("-p", "--proxy-server", type=str, required=False, default=noaa_url)
 
     return parser.parse_args(args)
 
 
-def endpoint_to_json(endpoint, fileloc):
+def endpoint_to_json(endpoint, fileloc, baseurl):
     response = requests.get(f"{baseurl}/{endpoint}")
     if not response.ok:
         print(f"Problem with endpoint: {endpoint}")
@@ -31,7 +32,7 @@ def endpoint_to_json(endpoint, fileloc):
 
 def main(args):
     args = parse_args(args)
-    endpoint_to_json(args.subject, args.target)
+    endpoint_to_json(args.subject, args.target, args.proxy_server)
 
 
 """
